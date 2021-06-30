@@ -22,124 +22,94 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-    EditText mgetphonenumber;
-    android.widget.Button msendotp;
-    CountryCodePicker mcountrycodepicker;
-    String countrycode;
-    String phonenumber;
+    EditText mGetPhoneNumber;
+    android.widget.Button mSendCode;
+    CountryCodePicker mCountryCodePicker;
+    String countryCode;
+    String phoneNumber;
 
     FirebaseAuth firebaseAuth;
-    ProgressBar mprogressbarofmain;
-
-
+    ProgressBar mProgressBarOfMain;
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    String codesent;
+    String codeSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mcountrycodepicker=findViewById(R.id.countryCodePicker);
-        msendotp=findViewById(R.id.sendCodeBtn);
-        mgetphonenumber=findViewById(R.id.getPhoneNumber);
-        mprogressbarofmain=findViewById(R.id.progressBar);
 
-        firebaseAuth=FirebaseAuth.getInstance();
+        mCountryCodePicker = findViewById(R.id.countryCodePicker);
+        mSendCode = findViewById(R.id.sendCodeBtn);
+        mGetPhoneNumber = findViewById(R.id.getPhoneNumber);
+        mProgressBarOfMain = findViewById(R.id.progressBar);
 
-        countrycode=mcountrycodepicker.getSelectedCountryCodeWithPlus();
-
-        mcountrycodepicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        countryCode = mCountryCodePicker.getSelectedCountryCodeWithPlus();
+        mCountryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
-                countrycode=mcountrycodepicker.getSelectedCountryCodeWithPlus();
+                countryCode = mCountryCodePicker.getSelectedCountryCodeWithPlus();
             }
         });
 
-        msendotp.setOnClickListener(new View.OnClickListener() {
+        mSendCode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 String number;
-                number=mgetphonenumber.getText().toString();
-                if(number.isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(),"Please Enter YOur number",Toast.LENGTH_SHORT).show();
+                number = mGetPhoneNumber.getText().toString();
+                if(number.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Please, enter your number", Toast.LENGTH_SHORT).show();
                 }
-                else if(number.length()<9)
-                {
-                    Toast.makeText(getApplicationContext(),"Please Enter correct number",Toast.LENGTH_SHORT).show();
+                else if(number.length()<9){
+                    Toast.makeText(getApplicationContext(), "Please, enter correct number", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-
-                    mprogressbarofmain.setVisibility(View.VISIBLE);
-                    phonenumber=countrycode+number;
-
-                    PhoneAuthOptions options=PhoneAuthOptions.newBuilder(firebaseAuth)
-                            .setPhoneNumber(phonenumber)
+                else{
+                    mProgressBarOfMain.setVisibility(View.VISIBLE);
+                    phoneNumber = countryCode+number;
+                    PhoneAuthOptions options = PhoneAuthOptions.newBuilder(firebaseAuth)
+                            .setPhoneNumber(phoneNumber)
                             .setTimeout(60L, TimeUnit.SECONDS)
                             .setActivity(MainActivity.this)
                             .setCallbacks(mCallbacks)
                             .build();
-
-
                     PhoneAuthProvider.verifyPhoneNumber(options);
 
-
-
                 }
-
-
             }
         });
 
-
-
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
-            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                //how to automatically fetch code here
-            }
-
-            @Override
-            public void onVerificationFailed(@NonNull FirebaseException e) {
+            public void onVerificationCompleted( PhoneAuthCredential phoneAuthCredential) {
 
             }
 
+            @Override
+            public void onVerificationFailed(FirebaseException e) {
+
+            }
 
             @Override
-            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            public void onCodeSent( String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(s, forceResendingToken);
-                Toast.makeText(getApplicationContext(),"OTP is Sent",Toast.LENGTH_SHORT).show();
-                mprogressbarofmain.setVisibility(View.INVISIBLE);
-                codesent=s;
-                Intent intent=new Intent(MainActivity.this,codeAuthentication.class);
-                intent.putExtra("otp",codesent);
+                Toast.makeText(getApplicationContext(),"Code was sent", Toast.LENGTH_SHORT).show();
+                mProgressBarOfMain.setVisibility(View.INVISIBLE);
+                codeSend = s;
+                Intent intent = new Intent(MainActivity.this, codeAuthentication.class);
+                intent.putExtra("code", codeSend);
                 startActivity(intent);
             }
         };
-
-
-
     }
-
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
-        {
-            Intent intent=new Intent(MainActivity.this,ChatActivity.class);
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            Intent intent = new Intent(MainActivity.this, ChatActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-
-
-
-
-
-
     }
 }

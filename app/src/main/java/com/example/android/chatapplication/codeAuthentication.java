@@ -22,13 +22,13 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 public class codeAuthentication extends AppCompatActivity {
 
-    TextView mchangenumber;
-    EditText mgetotp;
-    android.widget.Button mverifyotp;
-    String enteredotp;
+    TextView mChangeNumber;
+    EditText mGetCode;
+    android.widget.Button mVerifyCode;
+    String enteredCode;
 
     FirebaseAuth firebaseAuth;
-    ProgressBar mprogressbarofotpauth;
+    ProgressBar mProgressbarForAuth;
 
 
 
@@ -38,14 +38,14 @@ public class codeAuthentication extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code_authentication);
 
-        mchangenumber=findViewById(R.id.changeNumber);
-        mverifyotp=findViewById(R.id.verifyCode);
-        mgetotp=findViewById(R.id.getPhoneCode);
-        mprogressbarofotpauth=findViewById(R.id.progressBarForAuth);
+        mChangeNumber =findViewById(R.id.changeNumber);
+        mVerifyCode =findViewById(R.id.verifyCode);
+        mGetCode =findViewById(R.id.getPhoneCode);
+        mProgressbarForAuth =findViewById(R.id.progressBarForAuth);
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        mchangenumber.setOnClickListener(new View.OnClickListener() {
+        mChangeNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(codeAuthentication.this,MainActivity.class);
@@ -54,20 +54,20 @@ public class codeAuthentication extends AppCompatActivity {
             }
         });
 
-        mverifyotp.setOnClickListener(new View.OnClickListener() {
+        mVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enteredotp=mgetotp.getText().toString();
-                if(enteredotp.isEmpty())
+                enteredCode = mGetCode.getText().toString();
+                if(enteredCode.isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(),"Enter your OTP First ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Enter your Code First ",Toast.LENGTH_SHORT).show();
                 }
                 else
 
                 {
-                    mprogressbarofotpauth.setVisibility(View.VISIBLE);
-                    String coderecieved=getIntent().getStringExtra("otp");
-                    PhoneAuthCredential credential= PhoneAuthProvider.getCredential(coderecieved,enteredotp);
+                    mProgressbarForAuth.setVisibility(View.VISIBLE);
+                    String coderecieved=getIntent().getStringExtra("code");
+                    PhoneAuthCredential credential= PhoneAuthProvider.getCredential(coderecieved, enteredCode);
                     signInWithPhoneAuthCredential(credential);
 
                 }
@@ -86,8 +86,8 @@ public class codeAuthentication extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    mprogressbarofotpauth.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(),"Login sucess",Toast.LENGTH_SHORT).show();
+                    mProgressbarForAuth.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(),"Login success",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(codeAuthentication.this,ProfileSet.class);
                     startActivity(intent);
                     finish();
@@ -96,19 +96,11 @@ public class codeAuthentication extends AppCompatActivity {
                 {
                     if(task.getException() instanceof FirebaseAuthInvalidCredentialsException)
                     {
-                        mprogressbarofotpauth.setVisibility(View.INVISIBLE);
+                        mProgressbarForAuth.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(),"Login Failed",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-
-
-
-
     }
-
-
-
-
 }
