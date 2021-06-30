@@ -43,11 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.hbb20:ccp:2.5.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
-    // FirebaseUI
     implementation 'com.firebaseui:firebase-ui-common:4.0.1'
-
-    // Arch
     implementation "android.arch.core:runtime:1.1.1"
     implementation "android.arch.core:common:1.1.1"
 

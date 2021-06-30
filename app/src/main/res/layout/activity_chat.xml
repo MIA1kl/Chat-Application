@@ -31,23 +31,39 @@
 
         </RelativeLayout>
 
+
     </androidx.appcompat.widget.Toolbar>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/toolBar"
-                android:text="CHATS:"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:id="@+id/chat">
-            </TextView>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/include"
+        android:layout_below="@id/toolBar"
+        app:tabTextColor="#77a3a7"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        android:backgroundTint="#7B68EE"
+        app:tabIndicatorHeight="3dp"
+        android:layout_marginTop="0dp"
+        >
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chats"
+            android:id="@+id/chat">
 
+        </com.google.android.material.tabs.TabItem>
+
+
+
+
+
+    </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/chat"
+        android:layout_below="@+id/toolBar"
         android:layout_marginTop="0dp"
         android:id="@+id/fragmentContainer">
     </androidx.viewpager.widget.ViewPager>
