@@ -1,5 +1,6 @@
 package com.example.android.chatapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,7 +39,8 @@ public class ChatFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         mRecyclerView = v.findViewById(R.id.recyclerView);
 
-        Query query = firebaseFirestore.collection("Users");
+//        Query query = firebaseFirestore.collection("Users");
+        Query query=firebaseFirestore.collection("Users").whereNotEqualTo("uid",firebaseAuth.getUid());
         FirestoreRecyclerOptions<FirebaseModel> allUsername = new FirestoreRecyclerOptions.Builder<FirebaseModel>().setQuery(query,FirebaseModel.class).build();
         chatAdapter = new FirestoreRecyclerAdapter<FirebaseModel, NoteViewHolder>(allUsername) {
             @Override
@@ -57,7 +59,10 @@ public class ChatFragment extends Fragment {
                 noteViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(),"Item is clicked",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(getActivity(),SpecificChat.class);
+                        intent.putExtra("name",firebaseModel.getName());
+                        intent.putExtra("receiveduid",firebaseModel.getUid());
+                        startActivity(intent);
                     }
                 });
 

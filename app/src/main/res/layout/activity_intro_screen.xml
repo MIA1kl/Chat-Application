@@ -11,7 +11,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_launcher_background">
+        android:src="@drawable/ic_chat">
     </ImageView>
 
     <TextView
@@ -20,7 +20,9 @@
         android:text="Neobis"
         android:textColor="#7B68EE"
         android:layout_centerHorizontal="true"
+        android:textStyle="bold"
         android:layout_above="@+id/maintext"
+        android:textSize="28sp"
         android:layout_marginBottom="5dp">
     </TextView>
 
@@ -30,7 +32,7 @@
         android:text="Study App"
         android:layout_alignParentBottom="true"
         android:textSize="18sp"
-        android:textStyle="bold"
+
         android:id="@+id/maintext"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="150dp"

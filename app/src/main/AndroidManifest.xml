@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApplication">
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".SpecificChat"></activity>
+        <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileSet" />
         <activity android:name=".codeAuthentication" />
         <activity android:name=".MainActivity" />
