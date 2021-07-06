@@ -19,7 +19,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
     ArrayList<Messages> messagesArrayList;
 
     int ITEM_SEND=1;
-    int ITEM_RECIEVE=2;
+    int ITEM_RECEIVE =2;
 
     public MessagesAdapter(Context context, ArrayList<Messages> messagesArrayList) {
         this.context = context;
@@ -78,7 +78,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         }
         else
         {
-            return ITEM_RECIEVE;
+            return ITEM_RECEIVE;
         }
     }
 
@@ -103,8 +103,8 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewmessaage=itemView.findViewById(R.id.sendermessage);
-            timeofmessage=itemView.findViewById(R.id.timeofmessage);
+            textViewmessaage=itemView.findViewById(R.id.senderMessage);
+            timeofmessage=itemView.findViewById(R.id.timeOfMessage);
         }
     }
 
@@ -117,8 +117,8 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
         public RecieverViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewmessaage=itemView.findViewById(R.id.sendermessage);
-            timeofmessage=itemView.findViewById(R.id.timeofmessage);
+            textViewmessaage=itemView.findViewById(R.id.senderMessage);
+            timeofmessage=itemView.findViewById(R.id.timeOfMessage);
         }
     }
 
